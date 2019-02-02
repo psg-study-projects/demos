@@ -1,10 +1,10 @@
 Installation:
 
-$ unzip petergorgone-skifree-release.zip
-$ cd release
-$ npm install
-$ npm test
-$ node web
+* $ unzip petergorgone-skifree-release.zip
+* $ cd release
+* $ npm install
+* $ npm test
+* $ node web
 
 Open in browser: http://localhost:5000
 
