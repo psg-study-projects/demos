@@ -1,0 +1,1 @@
+[ ] configManager object/module for contants passed around like gameWidth, directions, etc

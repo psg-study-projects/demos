@@ -1,0 +1,22 @@
+{
+    "name": "psg-ceros-ski",
+    "version": "0.0.3",
+    "description": "Refactor of SkiFree game, based on initial version from dan.wash@ceros.com",
+    "main": "web.js",
+    "scripts": {
+        "test": "jasmine",
+        "start": "node web.js"
+    },
+    "author": "peter@peltronic.com",
+    "license": "",
+    "engines": {
+        "node": "8.4.0"
+    },
+    "dependencies": {
+        "http-server": "^0.10.0",
+        "lodash": "^4.17.11"
+    },
+    "devDependencies": {
+        "jasmine": "^3.3.1"
+    }
+}

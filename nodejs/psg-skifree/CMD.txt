@@ -1,0 +1,8 @@
+$ node update
+$ node node_modules/jasmine/bin/jasmine init
+$ node node_modules/jasmine/bin/jasmine examples
+
+$ node web
+$ npm test
+
+$ tar cvzf ~/Dropbox/PSG_Consulting/jobhunt/Ceros/psg-ski-master.tgz -X rsyncconfig/exclude.txt .

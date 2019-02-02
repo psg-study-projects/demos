@@ -1,0 +1,9 @@
+/home/ubuntu/workspace/nodejs/ski-master
+
+% node-psgc-aws
+rsync -az --force --delete --progress \
+    --chmod=g+w       \
+    --rsync-path='rsync'       \
+    --exclude-from=rsyncconfig/exclude.txt       \
+    . \
+    node-psgc-aws:/home/ubuntu/workspace/nodejs/ski-master

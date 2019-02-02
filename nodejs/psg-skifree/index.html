@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+    <title>Rhino-Ski</title>
+
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="css/game.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="js/assetManager.js"></script>
+    <script type="text/javascript" src="js/obstacleCollection.js"></script>
+    <script type="text/javascript" src="js/skier.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+</head>
+<body>
+    <div id="wrapper">
+        <div id="overlay">
+            <section id="help-expanded">
+                <div class="content notification">
+                    <button class="delete clickme-to_close_help"></button>
+                    <h4>Welcome to Peter's re-factored SkiFree app!</h4>
+                    <p>Here's some basic instructions...</p>
+                    <ul>
+                        <li>Use the arrow keys to turn the skier. Down-arrow will send him downill. Left and Right will start a turn.</li>
+                        <li>If you crash, use the up or left arrow to 'walk' away from the obstacle.</li>
+                        <li>Hit the spacebar to jump over obstacles (or just for fun!)</li>
+                    </ul>
+                </div>
+            </section>
+            <section id="help-compacted">
+                <a href="#" class="button is-warning clickme-to_open_help">Help</a>
+            </section>
+        </div>
+        <!-- game canvas will be inserted here via JS -->
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.clickme-to_open_help', function(event) {
+                event.preventDefault();
+                $('#help-compacted').hide();
+                $('#help-expanded').show();
+                return false;
+            });
+            $(document).on('click', '.clickme-to_close_help', function(event) {
+                event.preventDefault();
+                $('#help-expanded').hide();
+                $('#help-compacted').show();
+                return false;
+            });
+        });
+    </script>
+
+</body>
+</html>
