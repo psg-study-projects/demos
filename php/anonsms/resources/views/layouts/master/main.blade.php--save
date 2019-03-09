@@ -1,0 +1,117 @@
+<!DOCTYPE html> 
+<html lang="en">
+
+<head>
+    <!-- SERVER: <?php echo env('SERVER_ID'); ?> -->
+    <!-- RELEASE: 20180226.a -->
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Peter S. Gorgone">
+@section('head')
+    <title>JMBM Intranet</title>
+    <meta name="description" content="JMBM Intranet v4">
+    <meta name="keywords" content="jmbm law">
+@show
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- renderCssInlines() -->
+    {!! $g_assetMgr->renderCssInlines() !!}
+
+    {{--
+    <!-- INFO: {{ \App\Models\User::renderUserMeta() }} -->
+    --}}
+</head>
+
+<body class="@section('body-class')@show">
+
+    <div class="page-wrapper">
+
+
+        <div id="main-container" class="container-fluid">
+        <header class="">
+        @yield('header')
+        </header>
+            <section class="row">
+                @if(array_key_exists('sidebar', View::getSections()))
+                <aside class="col-12 col-md-3" id="main-sidebar">
+                    @yield('sidebar')
+                </aside>
+                <main class="tag-withSidebar col-12 col-md-9" id="main-content">
+                    @yield('content')
+                </main>
+                @else
+                <main class="tag-noSidebar col-12" id="main-content">
+                    @yield('content')
+                </main>
+                @endif
+            </section>
+        </div>
+
+    </div> {{-- .page-wrapper --}}
+
+{{-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ --}}
+
+    <div id="modal-placeholder" class="modal fade"></div> <!-- MODAL -->
+
+<script type="application/javascript">
+    var g_php2jsVars = <?php echo json_encode($g_php2jsVars); ?>;
+    var g_csrf_token='{{ csrf_token() }}';
+</script>
+
+<!-- renderJsLibs() -->
+{!! $g_assetMgr->renderJsLibs() !!}
+<!-- renderJsInlines() -->
+{!! $g_assetMgr->renderJsInlines() !!}
+
+<!-- blade_inlinejs -->
+@push('blade_inlinejs')
+<script type="application/javascript">
+
+$(document).ready(function () {
+
+    /*
+    $(window).resize(function() {
+        SiteUtils.fixFooter('body > .page-wrapper', 'body > #container-footer'); // on page resize
+    });
+    
+    $(window).on('load', function() {
+        SiteUtils.fixFooter('body > .page-wrapper', 'body > #container-footer'); // on page load
+    });
+    */
+
+    $('nav a[href="' + location.href + '"]').addClass('active');
+
+    // CSRF Token for AJAX
+    $.ajaxSetup({
+        headers: { 'X-CSRF-TOKEN': g_csrf_token }
+    });
+
+    // Site-wide generic handler for opening a modal
+    $(document).on('click', '.tag-clickme_to_open_modal.tag-global_modal', function (e) {
+        e.preventDefault();
+        var context = $(this);
+        var url = context.attr('href');
+        var payload = {};
+        $.getJSON(url, payload, function(response) {
+            $('#modal-placeholder').html(response.html);
+            $('#modal-placeholder').modal('toggle');
+            /*
+            if ( response.hasOwnProperty('cb_func') ) {
+            }
+            */
+        });
+        return false;
+    });
+});
+
+</script>
+@endpush
+
+@stack('blade_inlinejs')
+
+@include('layouts._jsroutes', [])
+</body>
+
+</html>

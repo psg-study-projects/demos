@@ -1,0 +1,92 @@
+body h1 {
+    margin-top: 25px;
+}
+
+/* %%% Major Nav  ------------------------- */
+
+nav.tag-majorNav.tag-adminTabs ul li {
+    display: inline-block;
+    padding: 3px 0;
+    /*
+    margin-bottom: 5px;
+    */
+}
+nav.tag-majorNav.tag-adminTabs ul li a {
+    font-size: 1.0em;
+    color: #fff; /* make admin panel nav readable */
+}
+nav.tag-majorNav.tag-adminTabs a.tag-clickme_to_logout {
+    background-color: #D6586F;
+}
+body.admin header nav.tag-majorNav ul {
+    margin: 22px 0;
+}
+
+/* %%% Sidebar/Aside  ------------------------- */
+
+aside {
+    margin-top: 15px;
+    /*
+    position: inherit;
+    top: 0;
+    margin-bottom: 25px;
+    height: 100%;
+    */
+    background: #f1f1f1;
+    padding: 15px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: solid 3px rgb(245, 123, 32); /*orange */
+}
+aside legend {
+    display: none;
+}
+
+
+/* %%% Minor Nav ------------------------- */
+
+/* In base.css...DRY
+aside .tag-minorNav {
+    min-height: 300px;
+}
+aside .tag-minorNav ul.btn-group-vertical {
+    padding-left: 0; 
+    margin-top: 20px;
+    margin-left: 0;
+    width: 100%;
+}
+aside .tag-minorNav ul.btn-group-vertical li {
+    margin-bottom: 5px;
+}
+aside .tag-minorNav ul.btn-group-vertical li a {
+    border: none;
+    width: 100%;
+}
+
+.tag-minorNav ul > li > button,
+.tag-minorNav ul > li a.button {
+    border-top: solid 1px #333;
+    font-size: 0.77rem;
+    -webkit-border-radius:0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+.tag-minorNav ul > li a.button:hover {
+    color: #008CBA;
+}
+.tag-minorNav ul > li:first-child > button,
+.tag-minorNav ul > li:first-child a.button {
+    border-top: 0;
+    -webkit-border-radius:3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+}
+.tag-minorNav ul > li:last-child > button,
+.tag-minorNav ul > li:last-child a.button {
+    -webkit-border-radius: 0 0 3px 3px;
+    -moz-border-radius:  0 0 3px 3px;
+    border-radius:  0 0 3px 3px;
+}
+
+*/

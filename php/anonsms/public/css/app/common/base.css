@@ -1,0 +1,225 @@
+html, body {
+}
+
+/* https://stackoverflow.com/questions/45642065/how-to-use-bootstrap-4-flexbox-to-fill-available-content */
+.flex-grow {
+    flex: 1 0 auto;
+}
+
+body ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+body .card .card-body {
+    padding: 0.75rem 1.25rem;
+    margin-left: 1rem;
+}
+body, body * {
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+}
+body header {
+    background-color: #2b3843;
+    color: #fff;
+}
+
+body table a {
+     color: #337ab7; 
+}
+
+/* %%% BS4 Navbar ------------------------- */
+nav.navbar {
+    background-color: #c2c2c2; /* gray-ish */
+}
+nav.navbar {
+    border-bottom: solid 2px #828282;
+}
+
+/* for navbar divider */
+nav.navbar .tag-pipe {
+    border-right: solid 1.7px #828282;
+    padding: 0;
+    margin: 0 1.7rem;
+    line-height: 2; /* hacky */
+    width: 0;
+}
+nav.navbar #dropdown-user_settings {
+    margin-right: 0.8rem;
+    color: #353535;
+}
+
+nav.navbar form.logout-button {
+    margin-left: 1.2rem;
+}
+
+nav.navbar .navbar-brand {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+nav.navbar .navbar-brand img {
+  height: 50px;
+}
+
+/* %%% Sticky Footer ------------------------- */
+/* from: https://getbootstrap.com/docs/4.2/examples/sticky-footer-navbar/ */
+
+.footer {
+  background-color: #f5f5f5;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+
+
+/* %%% Modifiers ------------------------- */
+
+.tag-hide {
+    display: none;
+}
+
+form textarea { /* limit resize of any textarea form to vertical direction */
+    resize: vertical;
+}
+a.disabled-link {
+    pointer-events: none; /* but see IE support: https://stackoverflow.com/questions/10276133/how-to-disable-html-links */
+    color: #cecece !important;
+    cursor: default;
+    text-decoration:none;
+
+}
+
+/* %%% Buttons ------------------------- */
+
+button, .button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 0;
+    cursor: pointer;
+    font-family: "Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+    font-weight: normal;
+    line-height: normal;
+    /*
+    margin: 0 0 1.25rem;
+    */
+    margin: 0;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 1rem 2rem 1.0625rem 2rem;
+    font-size: 1rem;
+    background-color: #008CBA;
+    border-color: #007095;
+    color: #fff;
+    font-weight: bold;
+    transition: background-color 300ms ease-out;
+}
+button.radius, .button.radius { 
+    border-radius: 3px; 
+}
+button.tiny, .button.tiny {
+    padding: 0.625rem 1.25rem 0.6875rem 1.25rem;
+    font-size: 0.6875rem;
+}
+button:hover, button:focus, .button:hover, .button:focus {
+    color: #fff;
+}
+button:hover, button:focus, .button:hover, .button:focus {
+    background-color: #007095;
+}
+
+
+/* %%% Misc. ------------------------- */
+
+a.disabled_link {
+    pointer-events: none; /* but see IE support: https://stackoverflow.com/questions/10276133/how-to-disable-html-links */
+    color: #cecece !important;
+    cursor: default;
+    text-decoration:none;
+    
+}
+a.disabled_link * {
+    /* ness to catch any <i> elements nested in the <a> tag */
+    color: #cecece !important;
+}
+
+body .bar {
+    background-color: rgb(244, 123, 32);
+    width:100%;
+    height: 7px;
+}
+body .bar.row {
+    /*
+    height: 5px;
+    */
+    max-width: 100%;
+}
+form .tag-verr {
+    color: red;
+    font-size: 12px;
+}
+
+
+/* Minor Navigation */
+aside ul.tag-minorNav.btn-group-vertical {
+    padding-left: 0; /* no idea where the orig. padding comes from */
+    margin-top: 1rem;
+    margin-left: 0;
+    width: 100%;
+}
+aside ul.tag-minorNav.btn-group-vertical li a {
+    border: none;
+}
+aside ul.tag-minorNav.btn-group-vertical li {
+    width: 100%;
+    margin-bottom: 0; /* 0.2rem;*/
+}
+aside ul.tag-minorNav > li,
+aside ul.tag-minorNav > li a {
+    background-color: #00bfff; /* aqua-ish */
+    color: #fff;
+    border-top: solid 1px #333;
+    font-size: 0.77rem;
+    -webkit-border-radius:0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+aside ul.tag-minorNav > li a:hover {
+    /*
+    color: #008CBA;
+    */
+}
+aside ul.tag-minorNav > li:first-child
+aside ul.tag-minorNav > li:first-child a {
+    border-top: 0;
+    -webkit-border-radius:3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+}
+aside ul.tag-minorNav > li:last-child,
+aside ul.tag-minorNav > li:last-child a {
+    -webkit-border-radius: 0 0 3px 3px;
+    -moz-border-radius:  0 0 3px 3px;
+    border-radius:  0 0 3px 3px;
+}
+
+aside ul.tag-minorNav.routes-utils > li a,
+aside ul.tag-minorNav.routes-pages > li a {
+    float: left;
+    display: inline-block;
+}
+aside ul.tag-minorNav.routes-pages > li a.clickme_to-expand {
+    float: right;
+    display: inline-block;
+}
+
+
+body .subcontainer-main .tab-content {
+    margin-top: 1rem;
+}
