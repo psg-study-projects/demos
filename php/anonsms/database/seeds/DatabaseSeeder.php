@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
             TopicsSeeder::class,
             UsersSeeder::class,
 
+            ActivitymessagesSeeder::class,
+
         ]);
     }
 }

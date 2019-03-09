@@ -5,25 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use PsgcLaravelPackages\Collector\Collectable;
 use PsgcLaravelPackages\Collector\CollectableTraits;
 use PsgcLaravelPackages\Utils\SmartEnum;
-//use App\Models\Ownable;
 
-class MsgtypeEnum extends SmartEnum implements Selectable {
-
-    const DM          = 'dm';
-    const OP_WIDGET   = 'op_widghet';
-    const OP_ACCOUNT  = 'op_account';
-
-    public static $keymap = [
-        self::DM         => 'Direct Message',
-        self::OP_WIDGET  => 'Widget Operation',
-        self::OP_ACCOUNT => 'Account Operation',
-    ];
-
-}
-
-// %TODOS:
-//  [ ] delete/trash: is tricky because receiver may delete but sender may keep. One way is to have a join
-//        table that tracks 'delete' state per party involved (delete state here is more like 'visibility')
 class Activitymessage extends BaseModel implements Guidable, Sluggable, Collectable, Deletable
 {
     use CollectableTraits;
@@ -32,63 +14,43 @@ class Activitymessage extends BaseModel implements Guidable, Sluggable, Collecta
     protected $guarded = ['id','guid','slug','created_at','updated_at'];
 
     // Default Validation Rules: may be overridden in controller...but NOTE these are used in renderFormLabel() and isFieldRequired() !
-    public static $vrules = [
-            'msgtype'      => 'required|alpha_dash',
-            'sender_type'   => 'required|alpha_dash',
-            'sender_id'    => 'required|integer',
-            'receiver_type' => 'required|alpha_dash',
-            'receiver_id'  => 'required|integer',
-            'subject'      => 'required',
-        ];
+    public static $vrules = [];
 
-    /*
-    protected $dispatchesEvents = [
-        'creating' => UserSaved::class,
-        //'deleted' => UserDeleted::class,
-    ];
-     */
-
-    //--------------------------------------------
-    // Boot
-    //--------------------------------------------
-    public static function boot()
-    {
-        parent::boot();
-
-        // Handle encoding/decoding of json fields
-        static::creating(function ($model) {
-            if ( array_key_exists('meta', $model->toArray()) ) {
-                $model->meta = json_encode($model->meta);
-            }
-        });
-        static::retrieved(function ($model) {
-            if ( array_key_exists('meta', $model->toArray()) ) {
-                $model->meta = json_decode($model->meta,true);
-            }
-        });
-    }
 
     //--------------------------------------------
     // Relations
     //--------------------------------------------
 
     public function sender() {
-        return $this->morphTo();
+        return $this->belongsTo('\App\Models\User', 'sender_id');
     }
 
     public function receiver() {
-        return $this->morphTo();
+        return $this->belongsTo('\App\Models\User', 'receiver_id');
     }
 
     //--------------------------------------------
     // Methods
     //--------------------------------------------
 
+    public static function makeCslug($sender,$receiver) 
+    {
+        /*
+        return ( $sender->id < $receiver->id ) 
+                    ? ($sender->username.'-'.$receiver->username)
+                    : ($receiver->username.'-'.$sender->username);
+         */
+        return ( $sender->id < $receiver->id ) 
+                    ? ($sender->id.'-'.$receiver->id)
+                    : ($receiver->id.'-'.$sender->id);
+
+    }
+
     // %%% --- Implement Sluggable Interface ---
 
     public function sluggableFields() : array
     {
-        return ['subject'];
+        return ['sender_id','receiver_id'];
     }
 
 
@@ -104,16 +66,11 @@ class Activitymessage extends BaseModel implements Guidable, Sluggable, Collecta
     // queryApplyFilter
     public static function filterQuery(&$query,$filters)
     {
-        if ( !empty($filters['msgtype']) ) {
-            $query->where('msgtype',$filters['msgtype']);
-        }
         if ( !empty($filters['sender']) ) {
             $query->where('sender_id',$filters['sender']['id']);
-            $query->where('sender_type',$filters['sender']['type']);
         }
         if ( !empty($filters['receiver']) ) {
             $query->where('receiver_id',$filters['receiver']['id']);
-            $query->where('receiver_type',$filters['receiver']['type']);
         }
         return $query;
     }
@@ -122,7 +79,6 @@ class Activitymessage extends BaseModel implements Guidable, Sluggable, Collecta
     // queryApplySearch
     public static function searchQuery(&$query,$search)
     {
-//dd('Widget::searchQuery()',$search);
         if ( empty($search) || ( is_array($search) && !array_key_exists('value',$search) ) ) {
             return $query; // no search string, ignore
         }
@@ -130,8 +86,7 @@ class Activitymessage extends BaseModel implements Guidable, Sluggable, Collecta
         $query->where( function ($q1) use($searchStr) {
             $q1->where('slug', 'like', '%'.$searchStr.'%');
             $q1->orWhere('guid', 'like', $searchStr.'%');
-            $q1->orWhere('subject', 'like', $searchStr.'%');
-            $q1->orWhere('message', 'like', $searchStr.'%');
+            $q1->orWhere('amcontent', 'like', '%'.$searchStr.'%');
         });
         return $query;
 

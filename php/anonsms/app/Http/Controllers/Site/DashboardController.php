@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\SiteController;
 use App\Libs\DatatableUtils\TableContainer;
 use App\Models\User;
+use App\Models\Activitymessage;
 
 class DashboardController extends SiteController
 {
@@ -39,6 +40,9 @@ class DashboardController extends SiteController
                 'resourceIdCol'=>'username', // column value to use for route param if applicable
             ],
         ]);
+
+        $conversations = Activitymessage::where('sender_id', $sessionUser->id)->orWhere('receiver_id', $sessionUser->id)->get();
+        dd( $conversations->toArray() );
 
         $filters = [
             'topic_id' => $sessionUser->topic->id ?? null,
