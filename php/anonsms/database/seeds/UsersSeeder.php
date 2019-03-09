@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Permission;
+use App\Models\Topic;
 
 class UsersSeeder extends Seeder
 {
@@ -31,6 +32,7 @@ class UsersSeeder extends Seeder
                         'phone' => '(717) 555-5123',
                         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
                         'remember_token' => str_random(10),
+                        'topic_id' => Topic::inRandomOrder()->value('id'),
                 ]);
         $user = User::find($user->id);
         $user->attachRole($this->_roles['general_user']);
@@ -40,6 +42,7 @@ class UsersSeeder extends Seeder
                         'phone' => '(310) 555-9876',
                         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
                         'remember_token' => str_random(10),
+                        'topic_id' => Topic::inRandomOrder()->value('id'),
                 ]);
         $user = User::find($user->id);
         $user->attachRole($this->_roles['general_user']);
@@ -57,6 +60,7 @@ class UsersSeeder extends Seeder
                         'phone' => $phone,
                         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
                         'remember_token' => str_random(10),
+                        'topic_id' => Topic::inRandomOrder()->value('id'),
             ]);
             $user->attachRole($this->_roles['general_user']);
         };
