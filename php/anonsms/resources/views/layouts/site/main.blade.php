@@ -36,11 +36,14 @@
             </ul>
 
 
+            {{--
             <form class="form-inline my-2 my-md-0">
                 <input class="form-control" type="text" placeholder="Search">
             </form>
+            --}}
 
             @auth
+            {{--
             <div class="tag-pipe d-none d-md-block">&nbsp;</div>
             <div class="dropdown">
                 <i class="fa fa-cog fa-lg dropdown-toggle" id="dropdown-user_settings" data-toggle="dropdown" ara-haspopup="true" area-expanded="false"></i>
@@ -50,6 +53,7 @@
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </div>
+            --}}
             <ul class="navbar-nav">
                 <li><a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{{Auth::user()->renderName()}}</a></li>
             </ul>

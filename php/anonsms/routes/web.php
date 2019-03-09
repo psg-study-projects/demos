@@ -17,7 +17,7 @@ Route::group(['middleware'=>[], 'namespace'=>'Auth'], function() {
 // ================================
 
 
-Route::group(['middleware'=>['checksite'], 'as'=>'site.', 'namespace'=>'Site'], function() {
+Route::group(['middleware'=>['auth'], 'as'=>'site.', 'namespace'=>'Site'], function() {
 
     Route::get('/dashboard', ['as'=>'dashboard.show', 'uses' => 'DashboardController@show']);
 
