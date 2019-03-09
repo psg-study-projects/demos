@@ -19,14 +19,26 @@
     <section class="subcontainer-main row">
 
         <article class="col">
-            <p>Placeholder content for Dashboard</p>
+            <h5>My Topic: {{ $session_user->topic->renderName() }}</h5>
+            <ul class="nav nav-tabs" id="tabs-dashboard" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="available_users-tab" data-toggle="tab" href="#available_users" role="tab" aria-controls="available_users" aria-selected="true">Available Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-conversations" data-toggle="tab" href="#conversations" role="tab" aria-controls="conversations" aria-selected="false">Conversations</a>
+                </li>
+            </ul>
 
-            <section class="row">
-                <article class="col-sm-6">
+            <div class="tab-content" id="tabs-dashboard-content">
 
+                <div id="available_users" class="tab-pane fade show active table-responsive" role="tabpanel" area-labelledby="available_users-tab">
+                    <table class="table tag-datatable tag-dt_util_container  datatable tag-standard_table_light" data-resource_key="available_users" data-route="{{ route('site.users.index', ['filters'=>[],'options'=>[]]) }}"></table>
+                </div>
+                <div id="conversations" class="tab-pane fade" role="tabpanel" aria-labelledby="tab-conversations">
+                    TBD
+                </div>
 
-                </article>
-            </section>
+            </div>
 
         </article>
 

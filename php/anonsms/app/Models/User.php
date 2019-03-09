@@ -99,8 +99,8 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
     // queryApplyFilter
     public static function filterQuery(&$query,$filters)
     {
-        if ( !empty($filters['is_confirmed']) ) {
-            $query->where('is_confirmed',$filters['is_confirmed']);
+        if ( !empty($filters['topic_id']) ) {
+            $query->where('topic_id',$filters['topic_id']);
         }
         return $query;
     }
