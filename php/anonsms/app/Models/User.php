@@ -32,29 +32,33 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
         });
     }
 
-
     //--------------------------------------------
     // Relations
     //--------------------------------------------
 
-    public function usercustom() {
-        return $this->hasOne('App\Models\Usercustom');
-    }
-
-    public function employee() {
-        return $this->hasOne('App\Models\Employee');
-    }
-
-    public function accounts() {
-        return $this->hasMany('App\Models\Account','owner_id');
+    public function topic() {
+        return $this->belongsTo('App\Models\Topic');
     }
 
     // Activity Messages sent/received
     public function sentmessages() {
-        return $this->morphMany('\App\Models\Activitymessage', 'sender');
+        return $this->hasMany('\App\Models\Activitymessage', 'sender');
     }
     public function receivedmessages() {
-        return $this->morphMany('\App\Models\Activitymessage', 'receiver');
+        return $this->hasMany('\App\Models\Activitymessage', 'receiver');
+    }
+
+    //--------------------------------------------
+    // Accessors/Mutators
+    //--------------------------------------------
+
+    // retuns as stdClass object
+    public function getPhoneAttribute($value) {
+        return empty($value) ? '' : preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "($1) $2-$3", $value); // format for display
+    }
+
+    public function setPhoneAttribute($value) {
+        $this->attributes['phone'] = empty($value) ? null : preg_replace('/\D+/', '', $value);
     }
 
     //--------------------------------------------
@@ -109,12 +113,9 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
             return $query; // no search string, ignore
         }
         $searchStr = is_array($search) ? $search['value'] : $search; // latter is simple string
-//dd($searchStr);
         $query->where( function ($q1) use($searchStr) {
             $q1->where('username', 'like', '%'.$searchStr.'%');
-            $q1->orWhere('email', 'like', $searchStr.'%');
-            $q1->orWhere('firstname', 'like', $searchStr.'%');
-            $q1->orWhere('lastname', 'like', $searchStr.'%');
+            $q1->orWhere('phone', 'like', '%'.$searchStr.'%');
             $q1->orWhereHas('roles', function($q2) use($searchStr) {
                 $q2->where('name','like', $searchStr.'%');
             });
@@ -145,9 +146,6 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
     {
         $key = trim($key);
         switch ($key) {
-            case 'is_confirmed':
-                $key = 'Confirmed?';
-                break;
             case 'id':
                 $key = 'PKID';
                 break;
@@ -170,8 +168,6 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
     {
         $key = trim($field);
         switch ($key) {
-            case 'is_confirmed':
-                return ViewHelpers::makeNiceBinary($this->is_confirmed);
             case 'primaryrole': // vitual/pseudo-column
                 return $this->renderRoles();
             case 'created_at':
@@ -193,7 +189,7 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
 
     public function renderFullname() 
     {
-        return $this->firstname.' '.$this->lastname;
+        return $this->username;
     }
 
     public function hasRole($roleSlug)
@@ -209,17 +205,8 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
 
     public static function getRedirectRoute()
     {
-        $sessionUser = \Auth::user();
-        $firstRole = $sessionUser->roles->first();
-
-        switch ($firstRole) {
-            case 'admin':
-                return route('admin.home.index');
-        }
-
-        return route('home.welcome');
-
-    } // getRedirectRoute()
+        return route('site.dashboard');
+    }
 
     // email to use for messages sent from the site
     public static function getSiteFromEmail()
@@ -228,6 +215,7 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
         return $from->email;
     }
 
+    /*
     // Send a direct message to another user
     public function sendDM(User $to, string $subject, string $message) : Activitymessage
     {
@@ -261,5 +249,6 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
         //return Activitymessage::where('msgtype',$amtype)->count();
         return $this->activitymessages()->where('msgtype',$amtype)->wherePivot('is_read',0)->count();
     }
+     */
 }
 
