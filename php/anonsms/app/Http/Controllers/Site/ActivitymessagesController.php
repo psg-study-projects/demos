@@ -52,9 +52,7 @@ class ActivitymessagesController extends SiteController
         if (!\Request::ajax()) {
 
             $this->_php2jsVars['datatables'] = [
-                //'activitymessages'=>$dtC->columnConfig(),
                 'activitymessages'=>[
-                    //'filters'=>[],
                     'colconfig'=>$dtC->columnConfig(),
                 ],
             ];
@@ -100,17 +98,23 @@ class ActivitymessagesController extends SiteController
 
         $obj = Activitymessage::create($request->all());
 
-        return redirect( route('site.chat.show',$conversation->guid) );
-
-        /*
-            $response = ['is_ok'=>1, 'records'=>$records, 'recordsTotal'=>$recordsTotal,'recordsFiltered'=>$recordsFiltered];
-            return \Response::json($response);
-         */
+        if (!\Request::ajax()) {
+            return redirect( route('site.chat.show',$conversation->guid) );
+        } else {
+            return \Response::json(['obj'=>$obj]);
+        }
     }
 
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
-        //
+        $obj = Activitymessage::where('slug',$slug)->firstOrFail();
+        if (!\Request::ajax()) {
+            return \View::make('site.activitymessages.show', [ 'obj'=>$obj ]);
+        } else {
+            return \Response::json([
+                'html' => \View::make($request->partial, [ 'obj'=>$obj ])->render(),
+            ]);
+        }
     }
 
 }

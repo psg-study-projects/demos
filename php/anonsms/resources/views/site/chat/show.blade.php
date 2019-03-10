@@ -23,7 +23,17 @@
                 {{ Form::close() }}
             </div>
             <ul class="list-messages">
-            @include('site.chat._messagelist', ['messages'=>$messages])
+            @foreach ($messages as $m)
+                <li>
+                    @include('site.activitymessages._show', ['obj'=>$m])
+                    {{--
+                    @include('site.chat._message', ['m'=>$m])
+                    <span><strong>{{ $m->sender->renderName() }}</strong></span>: 
+                    <span>{{ $m->renderField('amcontent') }}</span> 
+                    <span><small class="text-muted">{{ $m->renderField('created_at') }}</small></span>
+                    --}}
+                </li>
+            @endforeach
             </ul>
 
         </article>
@@ -41,23 +51,27 @@ $( document ).ready(function() {
 
     $(document).on('submit', 'form.store.activitymessages', function(e) {
         e.preventDefault();
-        var context = $(this);
+        var thisForm = $(this);
         (function () {
             return $.ajax({
-                            url: context.attr('action'),
+                            url: thisForm.attr('action'),
                             type: 'POST',
-                            data: context.serializeArray()
+                            data: thisForm.serializeArray()
             })
         })()
         .then( function(response) {
-            // ajax get call to messagelist partial, display here with some kind of save effect (for the new message only?)
-            $('#modal-placeholder').modal('hide');
-            $('#modal-placeholder').html('');
-            window.location.reload(true);
+            var url = g_routes['GET.site.activitymessages.show'].replace(/{activitymessage}/, response.obj.slug);
+            var payload = {
+                partial: 'site.activitymessages._show'
+            };
+            $.getJSON( url, payload, function(response) {
+                var el = $(response.html);
+                el.hide().prependTo('ul.list-messages').fadeIn(700);
+                thisForm.find('textarea').val('');
+            });
         })
         .fail( function(errResponse) {
-            console.log('ERROR: Could not update profile data');
-            NlFormbuilderUtils.renderValidationErrors(context, errResponse.responseJSON.errors);
+            console.log('ERROR: New message send failure');
         });
         return false;
     });

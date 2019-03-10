@@ -24,7 +24,7 @@ Route::group(['middleware'=>['auth'], 'as'=>'site.', 'namespace'=>'Site'], funct
 
     // -- activitymessages -- 
     Route::resource('activitymessages', 'ActivitymessagesController', [
-        'only'=>['index','store'],
+        'only'=>['index','show','store'],
     ]);
 
     Route::resource('users', 'UsersController', [
