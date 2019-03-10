@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             TopicsSeeder::class,
             UsersSeeder::class,
 
+            ConversationsSeeder::class,
             ActivitymessagesSeeder::class,
 
         ]);

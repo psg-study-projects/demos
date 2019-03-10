@@ -19,7 +19,7 @@ $factory->define(App\Models\Activitymessage::class, function (Faker $faker) {
     return [
         'sender_id'    => $sender->id,
         'receiver_id'  => $receiver->id,
-        'cslug'        => Activitymessage::makeCslug($sender,$receiver),
+        //'cslug'        => Activitymessage::makeCslug($sender,$receiver),
         'amcontent'    => $faker->paragraph(1,true),
     ];
 });

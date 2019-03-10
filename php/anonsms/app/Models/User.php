@@ -40,6 +40,11 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
         return $this->belongsTo('App\Models\Topic');
     }
 
+    public function conversations() {
+        return $this->belongsToMany('\App\Models\Conversation');
+    }
+
+    /* %TODO
     // Activity Messages sent/received
     public function sentmessages() {
         return $this->hasMany('\App\Models\Activitymessage', 'sender');
@@ -47,6 +52,7 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
     public function receivedmessages() {
         return $this->hasMany('\App\Models\Activitymessage', 'receiver');
     }
+     */
 
     //--------------------------------------------
     // Accessors/Mutators

@@ -12,13 +12,13 @@
 
     <section class="subcontainer-header row">
         <article class="col">
-            <h2>Welcome to the dashboard</h2>
+            <h2>Welcome to the Dashboard</h2>
         </article>
     </section>
 
     <section class="subcontainer-main row">
 
-        <article class="col">
+        <article class="col-8">
             <h5>My Topic: {{ $session_user->topic->renderName() }}</h5>
             <ul class="nav nav-tabs" id="tabs-dashboard" role="tablist">
                 <li class="nav-item">
@@ -35,7 +35,24 @@
                     <table class="table tag-datatable tag-dt_util_container  datatable tag-standard_table_light" data-resource_key="available_users" data-route="{{ route('site.users.index', ['filters'=>[],'options'=>[]]) }}"></table>
                 </div>
                 <div id="conversations" class="tab-pane fade" role="tabpanel" aria-labelledby="tab-conversations">
-                    TBD
+                    <table class="table">
+                        <tr>
+                            {{--
+                            <th>GUID</td>
+                            --}}
+                            <th>User</td>
+                            <th>Updated</td>
+                        </tr>
+                    @foreach ($conversations as $c)
+                        <tr>
+                            {{--
+                            <td>{{ $c->guid }} </td>
+                            --}}
+                            <td>{{ link_to_route( 'site.chat.show', $c->getPartner()->renderName(), $c->getPartner()->username ) }} </td>
+                            <td>{{ $c->renderField('updated_at') }} </td>
+                        </tr>
+                    @endforeach
+                    </table>
                 </div>
 
             </div>
