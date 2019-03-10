@@ -57,7 +57,7 @@ class DashboardController extends SiteController
 
         return \View::make('site.dashboard.show', [
             'session_user'  => $sessionUser,
-            'conversations' => $sessionUser->conversations,
+            'conversations' => $sessionUser->conversations->sortByDesc('updated_at'),
         ]);
     }
 }

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\SiteController;
 use App\Libs\DatatableUtils\TableContainer;
+use App\Models\Conversation;
 use App\Models\Activitymessage;
 
 class ActivitymessagesController extends SiteController
@@ -65,14 +66,8 @@ class ActivitymessagesController extends SiteController
 
         } else {
 
-            // Datatable format
-
-            //$filters = $request->input('filters',[]);
-
             $paging = ['offset'=>$request->input('start',0),'length'=>$request->input('length',10)];
-            //$filters =  $request->input('filters', []);
             $filters =  [ 'receiver' => ['type'=>'users','id'=>$sessionUser->id] ];
-            //$filters =  [];
             $search = $request->input('search',[]);
 
             $sorting = null;
@@ -92,20 +87,25 @@ class ActivitymessagesController extends SiteController
             $records = $dtC->renderColumnVals($records); // set rendering for special fields such as links, FKs, etc
 
             $response = ['is_ok'=>1, 'records'=>$records, 'recordsTotal'=>$recordsTotal,'recordsFiltered'=>$recordsFiltered];
-
             return \Response::json($response);
 
         }
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-        //
+        $conversation = Conversation::findOrFail($request->conversation_id);
+        $conversation->updated_at = date('Y-m-d H:i:s');
+        $conversation->save();
+
+        $obj = Activitymessage::create($request->all());
+
+        return redirect( route('site.chat.show',$conversation->guid) );
+
+        /*
+            $response = ['is_ok'=>1, 'records'=>$records, 'recordsTotal'=>$recordsTotal,'recordsFiltered'=>$recordsFiltered];
+            return \Response::json($response);
+         */
     }
 
     public function show($slug)
@@ -113,18 +113,4 @@ class ActivitymessagesController extends SiteController
         //
     }
 
-    public function edit($slug)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
-    }
 }

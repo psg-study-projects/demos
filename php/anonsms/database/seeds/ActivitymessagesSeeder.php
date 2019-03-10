@@ -18,7 +18,7 @@ class ActivitymessagesSeeder extends Seeder
         $conversations = Conversation::get();
 
         foreach ($conversations as $c) {
-            for ( $i = 0 ; $i < rand(1,20) ; $i++ ) { // number of messages per conversation
+            for ( $i = 0 ; $i < rand(1,40) ; $i++ ) { // number of messages per conversation
                 //$users = $c->users; // should be 2
                 if ( rand(0,1) ) {
                     $sender = $c->users[0];
@@ -28,9 +28,10 @@ class ActivitymessagesSeeder extends Seeder
                     $receiver = $c->users[0];
                 }
                 $am = Activitymessage::create([
-                    'sender_id'    => $sender->id,
-                    'receiver_id'  => $receiver->id,
-                    'amcontent'    => $faker->paragraph(1,true),
+                    'conversation_id' => $c->id,
+                    'sender_id'       => $sender->id,
+                    'receiver_id'     => $receiver->id,
+                    'amcontent'       => $faker->paragraph(1,true),
                 ]);
             }
         }

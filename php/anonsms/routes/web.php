@@ -20,11 +20,11 @@ Route::group(['middleware'=>[], 'namespace'=>'Auth'], function() {
 Route::group(['middleware'=>['auth'], 'as'=>'site.', 'namespace'=>'Site'], function() {
 
     Route::get('/dashboard', ['as'=>'dashboard.show', 'uses' => 'DashboardController@show']);
-    Route::get('/chat/{username}', ['as'=>'chat.show', 'uses' => 'ChatsController@show']);
+    Route::get('/chat/{conversation}', ['as'=>'chat.show', 'uses' => 'ChatController@show']);
 
     // -- activitymessages -- 
     Route::resource('activitymessages', 'ActivitymessagesController', [
-        'only'=>['index'],
+        'only'=>['index','store'],
     ]);
 
     Route::resource('users', 'UsersController', [

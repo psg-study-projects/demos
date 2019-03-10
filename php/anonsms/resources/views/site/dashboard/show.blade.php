@@ -41,14 +41,14 @@
                             <th>GUID</td>
                             --}}
                             <th>User</td>
-                            <th>Updated</td>
+                            <th>Last Activity</td>
                         </tr>
                     @foreach ($conversations as $c)
                         <tr>
                             {{--
                             <td>{{ $c->guid }} </td>
                             --}}
-                            <td>{{ link_to_route( 'site.chat.show', $c->getPartner()->renderName(), $c->getPartner()->username ) }} </td>
+                            <td>{{ link_to_route( 'site.chat.show', $c->getPartner()->renderName(), $c->guid ) }} </td>
                             <td>{{ $c->renderField('updated_at') }} </td>
                         </tr>
                     @endforeach
@@ -63,4 +63,3 @@
  
 </div>
 @endsection
-
