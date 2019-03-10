@@ -36,7 +36,8 @@ class RegisterController extends SiteController
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -58,10 +59,9 @@ class RegisterController extends SiteController
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
             'username' => 'required|string|max:255|unique:users',
+            'topic_id' => 'required|integer',
+            'phone' => 'required|string',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -69,16 +69,16 @@ class RegisterController extends SiteController
     // Create a new user instance after a valid registration.
     protected function create(array $data)
     {
-        $mtsRole = Role::where('name','=','mts')->firstOrFail();
+        $defaultRole = Role::where('name','=','general-user')->firstOrFail();
 
         $user = User::create([
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname'],
             'username' => $data['username'],
-            'email' => $data['email'],
+            'topic_id' => $data['topic_id'],
+            'phone' => $data['phone'],
             'password' => bcrypt($data['password']),
         ]);
-        $user->attachRole($mtsRole);
+        //$user->attachRole($defaultRole);
+        $user->roles()->attach($defaultRole->id);
         return $user;
     }
 
@@ -144,97 +144,7 @@ class RegisterController extends SiteController
      */
     protected function registered(Request $request, $user)
     {
-        //
-        Mail::to($user->email)->queue(new MailRegistered($user));
-    }
-
-
-    // =======
-
-    public function showRegisterByInviteForm(Request $request, $token)
-    {
-//dd('showRegisterByInviteForm',$token);
-        $invite = Invite::where('token',$token)->where('is_accepted',0)->first();
-        if ( empty($invite) ) {
-            //return redirect()->route('login');
-            return redirect(route('login'));
-        }
-        if ( $invite->is_accepted ) {
-            return redirect(route('login'));
-        }
-
-        //$data = [];
-        //$data['token'] = $token;
-
-        return view('auth.register_by_invite',[
-            'invite'=>$invite,
-        ]);
-
-    } // showRegisterByInviteForm()
-
-    public function registerByInvite(Request $request)
-    {
-        $extraRules =  [
-            'token' => 'required',
-        ];
-
-//$t = $request->all();
-//dd('request',$t);
-        $validator = $this->validator($request->all(),$extraRules);
-        $validator->validate();
-
-        $invite = Invite::where('token',$request->token)->first();
-
-        // Confirm token matches email
-        $validator->after(function($validator) use($invite) {
-            if ( empty($invite) ) {
-                $validator->errors()->add('token', 'Error: Token does not match email');
-            }
-        });
-
-        event(new \Illuminate\Auth\Events\Registered($user = $this->createByInvite($request->all(),$invite)));
-
-        $this->guard()->login($user);
-
-        return $this->registered($request, $user) ?: redirect($this->redirectPath());
-
-    } // registerByInvite()
-
-    protected function createByInvite(array $data, Invite $invite)
-    {
-        if ( $invite->is_accepted ) {
-            throw new \Exception('Can not process invite-based registration');
-        }
-
-        //$invite = \App\Models\Invite::findOrFail($invitePKID);
-        $user = \DB::transaction(function() use($data,$invite) {
-            $role = Role::findOrFail($invite->role->id);
-            $user = User::create([
-                'firstname' => $data['firstname'],
-                'lastname' => $data['lastname'],
-                'username' => $data['username'],
-                'email' => $data['email'],
-                'password' => bcrypt($data['password']),
-                'is_confirmed'=> 1,
-            ]);
-            $user->roles()->attach($role->id);
-
-            // Update Invite
-            $invite->is_accepted = 1;
-            $invite->accepted_at = $timestamp = date('Y-m-d H:i:s');
-            $invite->save();
-
-            return $user;
-        });
-
-        return $user;
-        /*
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-         */
+        // Mail::to($user->email)->queue(new MailRegistered($user));
     }
 
 }

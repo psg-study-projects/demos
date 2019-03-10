@@ -8,7 +8,7 @@ use PsgcLaravelPackages\Collector\CollectableTraits;
 use PsgcLaravelPackages\Utils\SmartEnum;
 use PsgcLaravelPackages\Utils\ViewHelpers;
 
-class Topic extends BaseModel implements Sluggable, Guidable, Collectable, Nameable
+class Topic extends BaseModel implements Sluggable, Guidable, Collectable, Nameable, Selectable
 {
     use CollectableTraits, ImportableTraits;
 
@@ -37,6 +37,21 @@ class Topic extends BaseModel implements Sluggable, Guidable, Collectable, Namea
         return ['tname'];
     }
 
+    // --- Implement Selectable Interface ---
+
+    public static function getSelectOptions($includeBlank=true, $keyField='id', $filters=[]) : array
+    {
+        $records = self::all();
+
+        $options = [];
+        if ($includeBlank) {
+            $options[''] = '';
+        }
+        foreach ($records as $i => $r) {
+            $options[$r->{$keyField}] = $r->renderName();
+        }
+        return $options;
+    }
 
     // %%% --- Implement Collectable Interface ---
 

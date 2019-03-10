@@ -24,33 +24,6 @@
                         @section('token') {{-- for registration by invite --}}
                         @show
 
-                        <div class="form-group{{ $errors->has('firstname') ? ' has-error' : '' }}">
-                            <div class="col-md-7">
-                            <label for="firstname" class="control-label">First Name</label>
-
-                                <input id="firstname" type="text" class="form-control" name="firstname" value="{{ old('firstname') }}" required autofocus>
-
-                                @if ($errors->has('firstname'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('firstname') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group{{ $errors->has('lastname') ? ' has-error' : '' }}">
-                            <div class="col-md-7">
-                            <label for="lastname" class="control-label">Last Name</label>
-
-                                <input id="lastname" type="text" class="form-control" name="lastname" value="{{ old('lastname') }}" required >
-
-                                @if ($errors->has('lastname'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('lastname') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                             <div class="col-md-7">
                             <label for="username" class="control-label">User Name</label>
@@ -65,17 +38,30 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+
+                        <div class="form-group{{ $errors->has('topic_id') ? ' has-error' : '' }}">
                             <div class="col-md-7">
-                            <label for="email" class="control-label">E-Mail Address</label>
+                            <label for="topic_id" class="control-label">Topic</label>
 
-                                @section('input_email') {{-- for registration by invite --}}
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-                                @show
+                                {{ Form::select('topic_id', \App\Models\Topic::getSelectOptions(), null, ['class'=>'form-control']) }}
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('topic_id'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('topic_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                            <div class="col-md-7">
+                            <label for="phone" class="control-label">Phone Number</label>
+
+                                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required >
+
+                                @if ($errors->has('phone'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('phone') }}</strong>
                                     </span>
                                 @endif
                             </div>

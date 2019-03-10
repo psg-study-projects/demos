@@ -15,10 +15,8 @@ class ChatController extends SiteController
     {
         parent::__construct();
 
-        $this->_assetMgr::registerJsLibs([
-        ]);
-        $this->_assetMgr::registerJsInlines([
-        ]);
+        $this->_assetMgr::registerJsLibs([ ]);
+        $this->_assetMgr::registerJsInlines([ ]);
         $this->_assetMgr::registerCssInlines([
             '/css/app/main/styles.css',
         ]);
@@ -28,20 +26,6 @@ class ChatController extends SiteController
     {
         $sessionUser = \Auth::user();
         $conversation = Conversation::where('guid',$conversation)->firstOrFail();
-        //$partner = User::where('username',$username)->firstOrFail();
-
-        /* start of logic to locate a conversation by 2 users...
-        $pivots1 = DB::table('conversation_user')->where('user_id',$partner->id)->get();
-        $pivots2 = DB::table('conversation_user')->where('user_id',$sessionUser->id)->get();
-        dd($pivots1, $pivots2);
-         */
-
-        /*
-        $conversation = $sessionUser->conversations;
-        $conversation = $sessionUser->conversations()->where('user_id',$partner->id)->first();
-        dd($conversation->toArray());
-         */
-
 
         \View::share('g_php2jsVars',$this->_php2jsVars);
 
