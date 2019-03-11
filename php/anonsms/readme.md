@@ -40,3 +40,6 @@ http://anonsms.peterg-webdeveloper.com/
 
 ## Product Architecuture
 ![Product Architecuture](https://github.com/peltronic/demos/blob/master/php/anonsms/docs/Product%20Architecture.png)
+
+## Database snapshot
+![Database Snapshot](https://github.com/peltronic/demos/blob/master/php/anonsms/docs/database.png)
