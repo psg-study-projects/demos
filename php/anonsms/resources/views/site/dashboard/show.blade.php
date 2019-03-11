@@ -43,7 +43,7 @@
                             <th>User</td>
                             <th>Last Activity</td>
                         </tr>
-                    @foreach ($conversations as $c)
+                        @foreach ($conversations as $c)
                         <tr>
                             {{--
                             <td>{{ $c->guid }} </td>
@@ -51,7 +51,7 @@
                             <td>{{ link_to_route( 'site.chat.show', $c->getPartner()->renderName(), $c->guid ) }} </td>
                             <td>{{ $c->renderField('updated_at') }} </td>
                         </tr>
-                    @endforeach
+                        @endforeach
                     </table>
                 </div>
 
@@ -63,3 +63,36 @@
  
 </div>
 @endsection
+
+@push('blade_inlinejs')
+<script type="text/javascript">
+
+$( document ).ready(function() {
+
+    $(document).on('click', '#available_users table td > a', function(e) {
+        e.preventDefault();
+        var context = $(this);
+        var username = context.html(); // %FIXME: this  should be taken from a data attribute
+        console.log('FOUND: '+username);
+
+        (function () {
+            var url = g_routes['POST.site.conversations.store'];
+            var payload = {
+                username: username
+            };
+            return $.ajax({ 
+                            url: url, 
+                            type: 'POST', 
+                            data: payload 
+                        });
+        })()
+        .then( function(response) {
+            window.location.replace(response.url); // redirect to response.redirect_url
+        });
+
+        return false;
+    });
+});
+
+</script>
+@endpush

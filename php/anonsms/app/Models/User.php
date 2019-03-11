@@ -5,6 +5,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use DB;
 use PsgcLaravelPackages\Collector\Collectable;
 use PsgcLaravelPackages\Collector\CollectableTraits;
 use PsgcLaravelPackages\Utils\ModelTraits; // use here as User does *not* extend BaseModel
@@ -219,6 +220,18 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
     {
         $from = self::where('username','pgorgone')->firstOrFail();
         return $from->email;
+    }
+
+    // Given a partner, find the corresponding conversation's GUID
+    public function getConversationByPartner($partner)
+    {
+        foreach ( $this->conversations as $c) {
+            //$has = $c->users->where('id', $partner->id);
+            if ( $c->users->where('id', $partner->id)->first() ) {
+                return $c;
+            }
+        }
+        return null;
     }
 
     /*

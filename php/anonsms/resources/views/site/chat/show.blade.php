@@ -37,7 +37,6 @@
 </div>
 @endsection
 
-
 @push('blade_inlinejs')
 <script type="text/javascript">
 

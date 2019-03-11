@@ -22,8 +22,11 @@ Route::group(['middleware'=>['auth'], 'as'=>'site.', 'namespace'=>'Site'], funct
     Route::get('/dashboard', ['as'=>'dashboard.show', 'uses' => 'DashboardController@show']);
     Route::get('/chat/{conversation}', ['as'=>'chat.show', 'uses' => 'ChatController@show']);
 
-    // -- activitymessages -- 
     Route::resource('activitymessages', 'ActivitymessagesController', [
+        'only'=>['index','show','store'],
+    ]);
+
+    Route::resource('conversations', 'ConversationsController', [
         'only'=>['index','show','store'],
     ]);
 

@@ -38,8 +38,9 @@ class DashboardController extends SiteController
             [
                 'colName' => 'username', // colName -> column name in DB, not displayed
                 'op' => 'link_to_route',
-                'route' => 'site.chat.show',
+                'route' => 'site.chat.show', // not quite correct but it will get enough info to the JS handler...
                 'resourceIdCol' => 'username', // column value to use for route param if applicable
+                //'query_params'=> ['username'=>'username'],
             ],
         ]);
 
