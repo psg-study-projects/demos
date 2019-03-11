@@ -156,6 +156,9 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
             case 'id':
                 $key = 'PKID';
                 break;
+            case 'topic_id':
+                $key = 'Topic';
+                break;
             case 'primaryrole': // virtual/pseudo-column
                 $key = 'Role (primary)';
                 break;
@@ -177,6 +180,8 @@ class User extends Authenticatable implements Collectable, Deletable, Selectable
         switch ($key) {
             case 'primaryrole': // vitual/pseudo-column
                 return $this->renderRoles();
+            case 'topic_id':
+                return $this->topic ? $this->topic->renderName() : 'N/A';
             case 'created_at':
             case 'updated_at':
             case 'deleted_at':

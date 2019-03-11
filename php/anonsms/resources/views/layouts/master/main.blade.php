@@ -50,7 +50,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-                    <span class="text-muted float-right">Copyright &copy; {{date('Y')}} Jeffer Mangels Butler & Mitchell LLP</span>
+                    <span class="text-muted float-right">Copyright &copy; {{date('Y')}} PSG Consulting</span>
                 </div>
             </div>
         </div>

@@ -34,7 +34,6 @@ class DashboardController extends SiteController
         $sessionUser = \Auth::user();
 
         $dtC_availableUsers = new TableContainer( 'users', '\App\Models\User', [
-            //['colName'=>'username'],
             [
                 'colName' => 'username', // colName -> column name in DB, not displayed
                 'op' => 'link_to_route',
@@ -42,6 +41,7 @@ class DashboardController extends SiteController
                 'resourceIdCol' => 'username', // column value to use for route param if applicable
                 //'query_params'=> ['username'=>'username'],
             ],
+            ['colName'=>'topic_id'],
         ]);
 
         $filters = [
