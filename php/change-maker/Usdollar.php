@@ -72,6 +72,12 @@ class Usdollar extends Currency
     }
 
 
+    // %TODO: use IoC, with only one class Currency, and inject a dollar (or yen, etc) 'object' with 
+    // an implemenation of this function as well as the denomination 'map'
+    // still need a 'type' common to the actual denominations so we can use that generic 'type' in the constructor of the Currency class
+    // Class restructure
+    // Currency -> Changer
+    // UsDollar/Yen -> injectable objects of abstract type (or interface?) 'Currency'
     public static function renderNiceAmount(int $val) : string
     {
         $dollars = floor($val/100);
