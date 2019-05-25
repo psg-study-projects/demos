@@ -1,4 +1,4 @@
-Here are the details of the code challenge.  Please complete 24 hours prior to your interview.  Please email the completed product to mbos@switch.com, yaguilar@switch.com, lvillarino@switch.com, and JRaub@switch.com as well as copy me to keep a copy for our file.
+Here are the details of the code challenge.  Please complete 24 hours prior to your interview.  
 
 Code Challenge!  We would like for you to write an API endpoint in PHP, which upon execution accepts two arguments.  
 
