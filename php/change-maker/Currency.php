@@ -12,6 +12,6 @@ abstract class Currency
     // display the currency in human-readable form instead of base units
     abstract public static function renderNiceAmount(int $val) : string;
 
-    // 'delta' must be in base units, integer values only
-    abstract protected function makeChange(int $delta) : array;
+    // 'amounts' must be in base units, integer values only
+    abstract public function makeChange(int $totalCost, int $amountProvided) : array;
 }

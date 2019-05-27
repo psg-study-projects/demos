@@ -85,26 +85,46 @@ class Usdollar extends Currency
         return '$'.$dollars.'.'.$cents;
     }
 
-    public function makeChange(int $delta) : array
+    public function makeChange(int $totalCost, int $amountProvided) : array
     {
-        echo 'Recieved '.self::renderNiceAmount($delta).'...'."\n";
+        $delta = $amountProvided - $totalCost;
+        if ($delta < 0) {
+            throw new Exception('Not enough cash provided to cover cost...');
+        }
+        $results = [
+            'change' => null,
+            'delta' => self::renderNiceAmount($delta),
+            'amount_provided' => self::renderNiceAmount($amountProvided),
+            'total_cost' => self::renderNiceAmount($totalCost),
+        ];
+        $change = [];
+        //echo 'Recieved '.self::renderNiceAmount($delta).'...'."\n";
         $d = $delta; // init
         foreach ($this->denominations as $v => $o) {
             if ( !$o['is_available'] ) {
                 continue; // skip if not avail.
             }
             $d = floor( $delta / $v);
-            echo "$d - $v";
+            //echo "$d - $v";
             if ($d > 0 ) {
-                echo '  ('.$d.' '.$this->renderDenomName($v).')';
+                //echo '  ('.$d.' '.$this->renderDenomName($v).')';
+                $change[] = [
+                    'qty' => $d,
+                    'denomination' => $this->renderDenomName($v),
+                    'sub-amount' => self::renderNiceAmount($d*$v),
+                    'base_unit' => $v,
+
+                ];
             }
-            echo "\n";
+            //echo "\n";
             $delta = $delta - $d*$v;
         }
-        return [];
+        $results['change'] = $change;
+        return $results;
     }
 }
 
+/*
 // test
 $usd = new Usdollar();
 $usd->makeChange( 107 );
@@ -120,3 +140,4 @@ echo "\n---------------- \n";
 $usd->makeChange( 15729 );
 echo "\n---------------- \n";
 $usd->makeChange( 7382 );
+ */
