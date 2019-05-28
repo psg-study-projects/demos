@@ -1,3 +1,10 @@
+h1. Simple Change Provider
+
+h2. An api endpoint that accepts parameters "total cost" and "amount provided", and will return the change to be given, broken down into individual denominations.  Supports multiple currencies (currently supported: US Dollars and Japanese Yen).
+
+
+h2. Requirements
+
 Here are the details of the code challenge.  Please complete 24 hours prior to your interview.  
 
 Code Challenge!  We would like for you to write an API endpoint in PHP, which upon execution accepts two arguments.  
@@ -7,3 +14,19 @@ One of those arguments should be a “total cost” (in dollars and/or cents) an
 As a reminder, our current tech stack is:  Centos, MySQL, PHP, Symfony, Doctrine, APIPlatform, Jenkins, PHPUnit, Behat.   Have fun with it!  
 
 
+h2. Usage
+
+*Endpoint:*
+
+* Base: http://changer.peterg-webdeveloper.com/make-change.php?total_cost=601&amount_provided=800&ctype=yen
+* Parameters
+** http://changer.peterg-webdeveloper.com/make-change.php
+** total_cost : integer 
+** amount_provided: integer
+** ctype : currency type (yen, usd, etc)
+** pretty: boolean, if true will return JSON in 'pretty-print' format
+
+*Examples:*
+
+* http://www.dev-changemaker.com/make-change.php?total_cost=601&amount_provided=800&ctype=yen
+* http://www.dev-changemaker.com/make-change.php?total_cost=601&amount_provided=800&ctype=usd&pretty

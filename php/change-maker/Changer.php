@@ -1,15 +1,10 @@
 <?php
-//require_once('Currency.php');
 require_once('Usdollar.php');
 require_once('Yen.php');
 
-// This can just be currency class, and we initiaize it (via injection?) with a json array currency 'map'
 class Changer
 {
-
-    private function __construct()
-    {
-    }
+    private function __construct() { }
 
     public static function factory(string $cType)
     {
