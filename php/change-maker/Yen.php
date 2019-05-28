@@ -47,6 +47,7 @@ class Yen extends Currency
         ],
     ];
 
+    // %TODO: can be refactored to a trait or base class
     public function __construct()
     {
         $this->denominations = self::$_denominations;
@@ -54,7 +55,6 @@ class Yen extends Currency
             return $b - $a;
         });
     }
-
 
     public static function renderNiceAmount(int $val) : string
     {

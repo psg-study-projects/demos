@@ -1,18 +1,22 @@
 <?php
+
+// Abstract base class with default implentations where approprate
 abstract class Currency 
 {
     protected $denominations; // initialized in child class
 
-    // $val is the 'key' for the denomination (value in baseunit)
     public function renderDenomName(int $val) : string
     {
+        // $val is the 'key' for the denomination (value in baseunit)
         return array_key_exists($val, $this->denominations) ? $this->denominations[$val]['name'] : 'N/A';
     }
 
-    // display the currency in human-readable form instead of base units
+    // Display the currency in human-readable form instead of base units
     abstract public static function renderNiceAmount(int $val) : string;
 
-    // 'amounts' must be in base units, integer values only
+    // Default implementation for the 'workhorse' function which computes the change. This 
+    // code is independent of currency type.
+    //    ~ 'amounts' must be in base units, integer values only
     public function makeChange(int $totalCost, int $amountProvided) : array
     {
         $delta = $amountProvided - $totalCost;
@@ -32,9 +36,7 @@ abstract class Currency
                 continue; // skip if not avail.
             }
             $d = floor( $delta / $v);
-            //echo "$d - $v";
             if ($d > 0 ) {
-                //echo '  ('.$d.' '.$this->renderDenomName($v).')';
                 $change[] = [
                     'denomination' => $this->renderDenomName($v),
                     'sub-amount' => static::renderNiceAmount($d*$v),
@@ -43,8 +45,7 @@ abstract class Currency
 
                 ];
             }
-            //echo "\n";
-            $delta = $delta - $d*$v;
+            $delta = $delta - $d*$v; // remainder for next iteration
         }
         $results['change'] = $change;
         return $results;

@@ -1,16 +1,10 @@
 <?php
 require_once('Currency.php');
-/*
-TODO:
-    [ ] unit test the classes
-        ~ add up the change to verify it matches total
-*/
 
-// This can just be currency class, and we initiaize it (via injection?) with a json array currency 'map'
 class Usdollar extends Currency
 {
     protected static $_baseunit = 'cents';
-    protected static $_denominations = [ // simulates DB data, %TODO: move to main(), init via constructor
+    protected static $_denominations = [ // simulates DB data
         1 => [
             'name' => 'Penny',
             'is_available' => true,
@@ -61,6 +55,7 @@ class Usdollar extends Currency
         ],
     ];
 
+    // %TODO: can be refactored to a trait or base class
     public function __construct()
     {
         $this->denominations = self::$_denominations;
@@ -68,7 +63,6 @@ class Usdollar extends Currency
             return $b - $a;
         });
     }
-
 
     public static function renderNiceAmount(int $val) : string
     {

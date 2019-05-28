@@ -29,3 +29,10 @@ __Examples:__
 
 * http://www.dev-changemaker.com/make-change.php?total_cost=601&amount_provided=800&ctype=yen
 * http://www.dev-changemaker.com/make-change.php?total_cost=601&amount_provided=800&ctype=usd&pretty
+
+### Structure
+
+* make-change.php: API endpoint implementation
+* Currency.php: Base class defining interface of currency objects and possible default implementations
+* Usdollar.php, Yen.php, etc.: Implentation of specific currency that extends Currency class
+* Changer.php: Class containing currency factory function, encapsulates implemenation.
