@@ -1,5 +1,15 @@
 #  Getgris coding challenge for Peter S Gorgone - 20201030
 
+To run:
+```
+$ node index.js
+
+  result: {
+    val: 55555,
+    path: 'RRRDDDDRDRDDDRDRDRDRRRDDDDDDRRDRDDRRDDDDDRRRDRRDDRDRDDRRDRRRDRRRDRDDRRRDRRDRRDRDRRDDDDRDDRDDRDRRRR'
+  }
+```
+
 ## Original Problem Statement:
 
 You are given a 2-dimensional grid of integers, like the example below. Consider the possible 
