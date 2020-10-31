@@ -12,7 +12,7 @@ $ node index.js
 
 ## Original Problem Statement:
 
-__You are given a 2-dimensional grid of integers, like the example below. Consider the possible paths through the numbers, from the upper-left to the lower-right corner, that only move down or to the right. The value of a path is the sum of all the numbers that it visits. The goal is to find the path with the greatest value. If there is a tie, any one of such paths would do.__
+_You are given a 2-dimensional grid of integers, like the example below. Consider the possible paths through the numbers, from the upper-left to the lower-right corner, that only move down or to the right. The value of a path is the sum of all the numbers that it visits. The goal is to find the path with the greatest value. If there is a tie, any one of such paths would do._
 
 Ref: 
 * https://www.getgrist.com/apply-20
