@@ -1,4 +1,4 @@
-#  Getgris coding challenge for Peter S Gorgone - 20201030
+#  Grist coding challenge for Peter S Gorgone - 20201030
 
 To run:
 ```
